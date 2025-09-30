@@ -14,7 +14,7 @@ public class Bicicleta {
     private Pneu pneuDianteiro;
     private Pneu pneuTraseiro;
 
-    // Componentes via composição (Aula 8)
+    // Componentes via composição
     private ComputadorDeBordo computador;
     private SistemaFreio freio;
 
@@ -88,8 +88,7 @@ public class Bicicleta {
     public void acelerar(int incremento) {
         if (incremento > 0) {
             this.velocidade += incremento;
-            System.out.println("Acelerando... Nova velocidade: " + this.velocidade + " km/h");
-            // Simulação simples: converte incremento em distância (ex.: 0.05 km por unidade)
+            System.out.println(">>> Acelerando... Nova velocidade: " + this.velocidade + " km/h");
             computador.atualizarDados(incremento * 0.05, 1.0);
         } else {
             System.out.println("O incremento de velocidade deve ser positivo.");
@@ -99,8 +98,7 @@ public class Bicicleta {
     public void frear(int decremento) {
         if (decremento > 0) {
             this.velocidade = Math.max(0, this.velocidade - decremento);
-            System.out.println("Freando... Nova velocidade: " + this.velocidade + " km/h");
-            // Aciona sistema de freio e registra (se estiver registrando)
+            System.out.println(">>> Freando... Nova velocidade: " + this.velocidade + " km/h");
             freio.acionar();
             computador.atualizarDados(0.0, 1.0);
         } else {
@@ -110,7 +108,7 @@ public class Bicicleta {
 
     public void mudarMarcha(int novaMarcha) {
         setMarcha(novaMarcha);
-        System.out.println("Marcha alterada para: " + this.marcha);
+        System.out.println(">>> Marcha alterada para: " + this.marcha);
     }
 
     // Métodos delegados ao computador de bordo
@@ -131,18 +129,31 @@ public class Bicicleta {
 
     @Override
     public String toString() {
-        return "Bicicleta{" +
-               "cor='" + cor + '\'' +
-               ", velocidade=" + velocidade +
-               ", marcha=" + marcha +
-               ", valor=" + valor +
-               ", recursos=" + recursos +
-               ", quadro=" + quadro +
-               ", pneuDianteiro=" + pneuDianteiro +
-               ", pneuTraseiro=" + pneuTraseiro +
-               ", computador=" + computador +
-               ", freio=" + freio +
-               '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n=== Bicicleta ===\n");
+        sb.append("Cor: ").append(cor).append("\n");
+        sb.append("Velocidade: ").append(velocidade).append(" km/h\n");
+        sb.append("Marcha: ").append(marcha).append("\n");
+        sb.append("Valor: R$ ").append(valor).append("\n");
+
+        sb.append("Quadro: ").append(quadro != null ? quadro : "Indefinido").append("\n");
+        sb.append("Pneu Dianteiro: ").append(pneuDianteiro != null ? pneuDianteiro : "Indefinido").append("\n");
+        sb.append("Pneu Traseiro: ").append(pneuTraseiro != null ? pneuTraseiro : "Indefinido").append("\n");
+
+        sb.append("Recursos Extras: ").append(
+            (recursos != null && !recursos.isEmpty()) ? recursos : "Nenhum"
+        ).append("\n");
+
+        sb.append("Computador de Bordo: ").append(
+            computador != null ? computador : "Não disponível"
+        ).append("\n");
+
+        sb.append("Sistema de Freio: ").append(
+            freio != null ? freio : "Não disponível"
+        ).append("\n");
+
+        sb.append("=================\n");
+        return sb.toString();
     }
 
     @Override
@@ -150,8 +161,6 @@ public class Bicicleta {
         if (this == o) return true;
         if (!(o instanceof Bicicleta)) return false;
         Bicicleta that = (Bicicleta) o;
-        // Observação: equals baseado em cor e valor (conforme sua implementação original).
-        // Para distinguir instâncias, seria melhor acrescentar um id único.
         return Objects.equals(cor, that.cor) && valor.compareTo(that.valor) == 0;
     }
 

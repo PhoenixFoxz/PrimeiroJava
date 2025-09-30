@@ -1,41 +1,69 @@
 package com.fum.fundamentos;
 
 public class SistemaFreio {
-    private String tipo;     // ex: "Disco", "V-Brake"
-    private String material; // exemplo
-    private boolean ativo;
+    private String tipo;       // Ex: "Disco", "V-Brake"
+    private String material;   // Ex: "Aço", "Carbono"
+    private boolean ligado;    // true = freio acionado, false = solto
 
+    // Construtor padrão
     public SistemaFreio() {
         this("Disco", "Aço");
     }
 
+    // Construtor completo
     public SistemaFreio(String tipo, String material) {
         this.tipo = (tipo != null) ? tipo : "Desconhecido";
         this.material = (material != null) ? material : "Desconhecido";
-        this.ativo = false;
+        this.ligado = false; // começa desligado (não freando)
     }
 
-    // Métodos solicitados no exercício
+    // Novo padrão: ligar/desligar
+    public void ligar() {
+        ligado = true;
+        System.out.println("Sistema de Freio LIGADO (" + tipo + ", " + material + ")");
+    }
+
+    public void desligar() {
+        ligado = false;
+        System.out.println("Sistema de Freio DESLIGADO");
+    }
+
+    // Compatibilidade com código antigo (acionar/liberar)
     public void acionar() {
-        this.ativo = true;
-        System.out.println("Sistema de Freio: ACIONADO (" + tipo + ", " + material + ")");
+        ligar();
     }
 
     public void liberar() {
-        this.ativo = false;
-        System.out.println("Sistema de Freio: LIBERADO");
+        desligar();
     }
 
-    public boolean verificarStatus() {
-        return this.ativo;
+    public boolean isLigado() {
+        return ligado;
     }
 
-    // Alias por compatibilidade
-    public void acionarFreio() { acionar(); }
-    public void soltarFreio() { liberar(); }
+    // Getters e Setters
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
     @Override
     public String toString() {
-        return "SistemaFreio{tipo='" + tipo + "', material='" + material + "', ativo=" + ativo + "}";
+        return "SistemaFreio{" +
+                "tipo='" + tipo + '\'' +
+                ", material='" + material + '\'' +
+                ", ligado=" + ligado +
+                '}';
     }
 }
