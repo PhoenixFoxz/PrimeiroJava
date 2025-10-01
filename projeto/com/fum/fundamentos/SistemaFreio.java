@@ -58,6 +58,27 @@ public class SistemaFreio {
         this.material = material;
     }
 
+    // Método com if/else para verificar a situação do freio
+    public void verificarStatus() {
+        if (ligado) {
+            if ("Carbono".equalsIgnoreCase(material)) {
+                System.out.println("Freio de " + tipo + " em carbono está acionado: alta performance!");
+            } else if ("Aço".equalsIgnoreCase(material)) {
+                System.out.println("Freio de " + tipo + " em aço está acionado: resistente e confiável.");
+            } else {
+                System.out.println("Freio acionado, material desconhecido.");
+            }
+        } else {
+            if ("Disco".equalsIgnoreCase(tipo)) {
+                System.out.println("Freio a disco está solto, pronto para pedalar rápido.");
+            } else if ("V-Brake".equalsIgnoreCase(tipo)) {
+                System.out.println("Freio V-Brake está solto, cuidado em descidas.");
+            } else {
+                System.out.println("Freio desligado.");
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "SistemaFreio{" +
